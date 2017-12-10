@@ -51,6 +51,7 @@ public class Binary {
         return result;
     }
 
+
     public  Binary getOnesComplement()
     {
         for(int i=0;i<NoOfBits;i++)
@@ -74,6 +75,9 @@ public class Binary {
         return result;
     }
     */
+    /* Parses Binary object from a String object
+     * Useful for assigning Binary objects from binary strings read from console
+     */
     public static Binary parseBinary(String bin_str) throws setbitException
     {
         int str_len=bin_str.length();
@@ -84,6 +88,9 @@ public class Binary {
         }
         return new Binary(bits);
     }
+    /*
+     Prints the Binary object
+     */
     public void print()
     {
         char[] output=new char[NoOfBits];
@@ -97,7 +104,9 @@ public class Binary {
         }
         System.out.println(output);
     }
-
+    /*
+    Returns a decimal object of Integer version
+     */
     public Decimal getDecimalInt()
     {
         int[] int_bit=new int[NoOfBits];
