@@ -95,11 +95,13 @@ public class Binary {
         {
             output[i]=(char)48;
         }
+        String binarystr="";
         for (int i=0;i<NoOfBits;i++)
         {
             output[i]=this.array[i].getchar();
+            binarystr=binarystr+output[i];
         }
-        return Arrays.toString(output);
+        return binarystr;
     }
     /*
     Returns a decimal object of Integer version
