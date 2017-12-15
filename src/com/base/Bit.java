@@ -2,6 +2,8 @@ package com.base;
 
 import com.base.Exception.setbitException;
 
+import java.util.BitSet;
+
 public class Bit
 {
     private byte _bit;
@@ -19,6 +21,10 @@ public class Bit
         {
             throw new setbitException("Value of Bit can not be set other than to 1 or 0");
         }
+    }
+    public Bit(Bit b)
+    {
+        this._bit=b._bit;
     }
     public void toggle()
     {
@@ -61,4 +67,5 @@ public class Bit
     {
         return (char)(_bit+48);
     }
+
 }

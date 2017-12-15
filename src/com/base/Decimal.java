@@ -10,8 +10,14 @@ public class Decimal {
         DecimalInt =a;
     }
     public Binary getBinary(int NoOfBits) throws setbitException {
-
-        int a= DecimalInt;
+        int a;
+        if(DecimalInt<0)
+        {
+           a=0-DecimalInt;
+        }
+        else {
+            a = DecimalInt;
+        }
         Bit[] bit=new Bit[NoOfBits];
         int binary[]=new int[NoOfBits];
         for (int i=0;i<NoOfBits;i++)
@@ -30,11 +36,17 @@ public class Decimal {
             bit[x]=new Bit(binary[x]);
         }
         Binary result=new Binary(bit);
-        return result;
-    }
-    public void print()
-    {
-        System.out.println(DecimalInt);
+        if(DecimalInt<0)
+        {
+            return result.getTwosComplement();
+        }
+        else {
+            return result;
+        }
     }
 
+    @Override
+    public String toString() {
+        return Integer.toString(DecimalInt);
+    }
 }

@@ -2,6 +2,8 @@ package com.base;
 
 import com.base.Exception.setbitException;
 
+import java.util.Arrays;
+
 public class Binary {
     private Bit[] array;
     private int NoOfBits;
@@ -61,20 +63,14 @@ public class Binary {
         return this;
     }
 
-/*
-    private  Binary getTwosComplement()
-    {
 
-        Binary result=new Binary(NoOfBits);
-        for(int i=0;i<7;i++)
-        {
-            int[] rhs={0,0,0,0,0,0,0,1};
-            Binary operand=new Binary(rhs);
-            result=getOnesComplement().addTo(operand);
-        }
-        return result;
+    public  Binary getTwosComplement() throws setbitException
+    {
+        Binary temp=new Binary(NoOfBits);
+        temp.array[NoOfBits-1].toggle();
+        return this.getOnesComplement().addTo(temp);
     }
-    */
+
     /* Parses Binary object from a String object
      * Useful for assigning Binary objects from binary strings read from console
      */
@@ -89,9 +85,10 @@ public class Binary {
         return new Binary(bits);
     }
     /*
-     Prints the Binary object
+     Returns the Binary object as String
      */
-    public void print()
+    @Override
+    public String toString()
     {
         char[] output=new char[NoOfBits];
         for (int i=0;i<NoOfBits;i++)
@@ -102,17 +99,37 @@ public class Binary {
         {
             output[i]=this.array[i].getchar();
         }
-        System.out.println(output);
+        return Arrays.toString(output);
     }
     /*
     Returns a decimal object of Integer version
      */
-    public Decimal getDecimalInt()
-    {
+    public Decimal getDecimalInt() throws setbitException {
+        Binary temp=new Binary(NoOfBits);
+        boolean negativeFlag=false;
+        if(array[0].getchar()=='1')
+        {
+            negativeFlag=true;
+            int i=NoOfBits-1;
+            do
+            {
+                temp.array[i]=new Bit(this.array[i]);
+
+            }while(this.array[i--].getchar()!='1');
+            Binary temp2=this.getOnesComplement();
+            for(int x=i;x>=0;x--)
+            {
+                temp.array[x]=new Bit(temp2.array[x]);
+            }
+        }
+        else
+        {
+            temp=this;
+        }
         int[] int_bit=new int[NoOfBits];
         for(int i=0;i<NoOfBits;i++)
         {
-            int_bit[i]=array[i].getchar()-'0';
+            int_bit[i]=temp.array[i].getchar()-'0';
         }
         int decimalInt=0;
         int exponent=0;
@@ -120,7 +137,15 @@ public class Binary {
         {
             decimalInt+=int_bit[i]*Math.pow(2,exponent++);
         }
-        Decimal decimal=new Decimal(decimalInt);
+        Decimal decimal;
+        if(negativeFlag)
+        {
+            decimal=new Decimal(0-decimalInt);
+        }
+        else
+        {
+            decimal=new Decimal(decimalInt);
+        }
         return decimal;
     }
 }
